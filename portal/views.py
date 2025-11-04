@@ -152,15 +152,16 @@ class PageEntryView(APIView):
 
         serializer = PageEntrySerializer(entries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    
     def post(self, request):
         serializer = PageEntrySerializer(data=request.data)
         if serializer.is_valid():
             entry = serializer.save()
-            # ✅ Re-serialize the saved entry for full response
             response_serializer = PageEntrySerializer(entry)
             return Response(response_serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
